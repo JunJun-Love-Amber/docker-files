@@ -22,3 +22,15 @@ RUN git clone https://github.com/allegro/php-protobuf; \
 	make; \ 
 	make install; \
 	docker-php-ext-enable protobuf
+
+# 安装 tideways
+RUN echo 'deb http://s3-eu-west-1.amazonaws.com/tideways/packages debian main' > /etc/apt/sources.list.d/tideways.list; \
+	apt update; \
+	apt install -y gnupg ;\
+	wget -qO - https://s3-eu-west-1.amazonaws.com/tideways/packages/EEB5E8F4.gpg | sudo apt-key add -; \
+	apt-get update; \
+	apt-get install tideways-php; \
+	docker-php-ext-enable tideways
+
+
+
