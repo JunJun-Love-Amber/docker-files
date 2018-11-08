@@ -2,7 +2,7 @@ FROM php:7.0-fpm
 
 # 安装常用工具
 RUN apt update; \
-	apt install vim net-tools iputils-ping htop iotop curl git zip procps -y; \
+	apt install vim net-tools iputils-ping htop iotop curl git zip procps wget sudo -y; \
 	rm -rf /var/lib/apt/lists/*
 # 启用 ll 
 RUN php -r '$bashrc="/root/.bashrc";file_put_contents($bashrc,str_replace("# alias ll","  alias ll",file_get_contents($bashrc)));'
@@ -13,7 +13,7 @@ RUN sed -i 's/\;pid = run\/php-fpm.pid/pid = run\/php-fpm.pid/g' /usr/local/etc/
 RUN pecl install xdebug; \
 	docker-php-ext-enable xdebug; \
 	rm -rf /tmp/pear
-	
+
 # 安装依赖与扩展
 RUN	requirements="libmcrypt-dev libcurl4-gnutls-dev libpng-dev zlib1g-dev"; \ 	
 	apt-get update; apt-get install -y $requirements; \
