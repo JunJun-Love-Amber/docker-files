@@ -55,7 +55,7 @@ RUN { \
 
 # 安装 nginx
 RUN apt update; \
-	apt nginx -y; \
+	apt install nginx -y; \
 	rm -rf /var/lib/apt/lists/*
 
 # php-fpm xdebug http https sshd
