@@ -26,7 +26,7 @@ RUN pecl install xdebug; \
 		echo 'xdebug.remote_host=127.0.0.1'; \
 		echo '; Effective only in the Linux Environment and docker run option --net=host'; \
 		echo '; xdebug.remote_connect_back=1'; \
-	} | tee /usr/local/etc/php/conf.d/futu.ini
+	} | tee /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 
 # 安装依赖与扩展
