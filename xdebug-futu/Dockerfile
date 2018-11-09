@@ -53,5 +53,10 @@ RUN { \
 	echo 'site_idc="local"'; \
 }  | tee /usr/local/etc/php/conf.d/futu.ini
 
+# 安装 nginx
+RUN apt update; \
+	apt nginx -y; \
+	rm -rf /var/lib/apt/lists/*
+
 # php-fpm xdebug http https sshd
 EXPOSE 9000 9001 80 443 22
