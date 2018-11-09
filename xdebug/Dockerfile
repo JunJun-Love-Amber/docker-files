@@ -33,11 +33,9 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
     composer self-update && \
     composer config -g repo.packagist composer https://packagist.phpcomposer.com
 
+
 WORKDIR /codes
 
-# php-fpm
-EXPOSE 9000
-# xdebug 
-EXPOSE 9001
+# php-fpm xdebug
+EXPOSE 9000 9001
 
-# php-fpm# php-fpm# php-fpm
