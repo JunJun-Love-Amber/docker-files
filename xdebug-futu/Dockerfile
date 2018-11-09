@@ -45,5 +45,12 @@ RUN cd /usr/local/src; \
 # 安装 mongodb
 RUN pecl install mongodb; docker-php-ext-enable mongodb; rm -rf /tmp/pear
 
+# futu.ini
+RUN { \
+	echo '[futu]'; \
+	echo 'svrtype="release"'; \
+	echo 'site_location="ml"'; \
+	echo 'site_idc="local"'; \
+}  | tee /usr/local/etc/php/conf.d/futu.ini
 
 
