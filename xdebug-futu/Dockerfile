@@ -59,4 +59,4 @@ RUN apt update; \
 	rm -rf /var/lib/apt/lists/*
 
 # php-fpm xdebug http https sshd
-EXPOSE 9000 9001 80 443 22
+EXPOSE 9000 80 443 22 8057
