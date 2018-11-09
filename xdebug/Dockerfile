@@ -17,7 +17,17 @@ RUN cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
 # 安装 xdebug
 RUN pecl install xdebug; \
 	docker-php-ext-enable xdebug; \
-	rm -rf /tmp/pear
+	rm -rf /tmp/pear;\
+	{ \
+		echo 'xdebug.overload_var_dump=0'; \
+		echo 'xdebug.remote_enable=1'; \
+		echo 'xdebug.remote_autostart=1'; \
+		echo 'xdebug.remote_port=9001'; \
+		echo 'xdebug.remote_host=127.0.0.1'; \
+		echo '; Effective only in the Linux Environment and docker run option --net=host'; \
+		echo '; xdebug.remote_connect_back=1'; \
+	} | tee /usr/local/etc/php/conf.d/futu.ini
+
 
 # 安装依赖与扩展
 RUN	requirements="libmcrypt-dev libcurl4-gnutls-dev libpng-dev zlib1g-dev"; \ 	
