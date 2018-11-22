@@ -18,7 +18,7 @@ RUN { \
 }  | tee /usr/local/etc/php/conf.d/futu.ini
 
 # 修正 xdebug 配置
-RUN sed -i 's/xdebug.remote_host=127.0.0.1/xdebug.remote_host=172.18.10.109/g'  /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN sed -i 's/xdebug.remote_host=127.0.0.1/xdebug.remote_host=192.168.51.177/g'  /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 # php-fpm xdebug http https sshd
 EXPOSE 9000 80 443 22 8057
