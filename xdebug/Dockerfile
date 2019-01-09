@@ -82,6 +82,20 @@ RUN pecl install mongodb; docker-php-ext-enable mongodb; rm -rf /tmp/pear
 # 安装 nginx
 RUN apt update; apt install nginx -y; rm -rf /var/lib/apt/lists/*
 
+# 安装 sshd
+RUN apt update; \
+	apt install -y openssh-server; \
+	mkdir -p /var/run/sshd;\
+	echo 'root:root' | chpasswd;\
+	sed -i 's/\#PermitRootLogin/PermitRootLogin/' /etc/ssh/sshd_config;\
+	sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+
+# SSH login fix. Otherwise user is kicked off after login
+RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+
+# ENV NOTVISIBLE "in users profile"
+# RUN echo "export VISIBLE=now" >> /etc/profile
+
 WORKDIR /codes
 
 # php-fpm xdebug
