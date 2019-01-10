@@ -83,12 +83,8 @@ RUN pecl install mongodb; docker-php-ext-enable mongodb; rm -rf /tmp/pear
 RUN apt update; apt install nginx -y; rm -rf /var/lib/apt/lists/*
 
 # 安装 sshd
-<<<<<<< HEAD
 RUN apt update; \
 	apt install -y openssh-server; \
-=======
-RUN apt install -y openssh-server; \
->>>>>>> 7.0
 	mkdir -p /var/run/sshd;\
 	echo 'root:root' | chpasswd;\
 	sed -i 's/\#PermitRootLogin/PermitRootLogin/' /etc/ssh/sshd_config;\
