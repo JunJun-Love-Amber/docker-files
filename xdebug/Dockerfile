@@ -10,7 +10,11 @@ RUN php -r '$bashrc="/root/.bashrc";file_put_contents($bashrc,str_replace("# ali
 # 修改 php-fpm 配置
 RUN sed -i 's/\;pid = run\/php-fpm.pid/  pid = run\/php-fpm.pid/g' /usr/local/etc/php-fpm.conf; \
 	sed -i 's/\;error_log = log\/php-fpm.log/  error_log = log\/php-fpm.log/g' /usr/local/etc/php-fpm.conf; \
-	sed -i 's/\; process.max = 128/  process.max = 128/g' /usr/local/etc/php-fpm.conf
+	sed -i 's/\; process.max = 128/  process.max = 128/g' /usr/local/etc/php-fpm.conf; \
+	sed -i 's/pm.max_children = 5/pm.max_children = 25/g' /usr/local/etc/php-fpm.d/www.conf; \
+	sed -i 's/pm.start_servers = 2/pm.start_servers = 10/g' /usr/local/etc/php-fpm.d/www.conf; \
+	sed -i 's/pm.min_spare_servers = 1/pm.min_spare_servers = 5/g' /usr/local/etc/php-fpm.d/www.conf; \
+	sed -i 's/pm.max_spare_servers = 3/pm.max_spare_servers = 15/g' /usr/local/etc/php-fpm.d/www.conf; 
 
 RUN cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
 
