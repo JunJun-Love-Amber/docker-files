@@ -35,10 +35,9 @@ RUN pecl install xdebug; \
 
 # 安装依赖与扩展
 RUN	requirements="libmcrypt-dev libcurl4-gnutls-dev libpng-dev zlib1g-dev"; \ 	
-	apt-get update; apt-get install -y $requirements; \
+	apt update; apt install -y $requirements; rm -rf /var/lib/apt/lists/*; \
 	docker-php-ext-install -j$(nproc) \
-		gd bcmath pdo_mysql mcrypt  pcntl sockets zip; \
-	rm -rf /var/lib/apt/lists/*
+		gd bcmath pdo_mysql mcrypt  pcntl sockets zip; 
 
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
     php composer-setup.php && \
@@ -48,7 +47,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
     composer config -g repo.packagist composer https://packagist.phpcomposer.com
 
 # 安装 igbinary redis
-RUN apt-get install -y redis-server; \
+RUN apt update; apt install -y redis-server; rm -rf /var/lib/apt/lists/*; \
 	pecl install igbinary redis; \
 	yes | pecl install redis; \
 	docker-php-ext-enable igbinary redis; \
@@ -58,20 +57,16 @@ RUN apt-get install -y redis-server; \
 
 
 # 安装 imap bz2
-RUN apt-get update; \
-	apt-get install -y libc-client-dev libkrb5-dev libbz2-dev; \
-	rm -r /var/lib/apt/lists/*; \
+RUN apt update; apt install -y libc-client-dev libkrb5-dev libbz2-dev; rm -r /var/lib/apt/lists/*; \
 	docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
     && docker-php-ext-install imap bz2;\
 	rm -rf /tmp/pear
 
 # 安装 tideways
 RUN echo 'deb http://s3-eu-west-1.amazonaws.com/tideways/packages debian main' > /etc/apt/sources.list.d/tideways.list; \
-	apt update; \
-	apt install -y gnupg ;\
+	apt update; apt install -y gnupg ;\
 	wget -qO - https://s3-eu-west-1.amazonaws.com/tideways/packages/EEB5E8F4.gpg | sudo apt-key add -; \
-	apt-get update; \
-	apt-get install tideways-php; \
+	apt update; apt install tideways-php; rm -rf /var/lib/apt/lists/*; \
 	docker-php-ext-enable tideways
 
 # 安装 tideways_xhprof
@@ -91,8 +86,7 @@ RUN pecl install mongodb; docker-php-ext-enable mongodb; rm -rf /tmp/pear
 RUN apt update; apt install nginx -y; rm -rf /var/lib/apt/lists/*
 
 # 安装 sshd
-RUN apt update; \
-	apt install -y openssh-server; \
+RUN apt update; apt install -y openssh-server; rm -rf /var/lib/apt/lists/*; \
 	mkdir -p /var/run/sshd;\
 	echo 'root:root' | chpasswd;\
 	sed -i 's/\#PermitRootLogin/PermitRootLogin/' /etc/ssh/sshd_config;\
