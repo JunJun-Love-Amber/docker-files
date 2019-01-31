@@ -44,10 +44,14 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
     composer config -g repo.packagist composer https://packagist.phpcomposer.com
 
 # 安装 igbinary redis
-RUN pecl install igbinary redis; \
+RUN apt-get install -y redis-server; \
+	pecl install igbinary redis; \
 	yes | pecl install redis; \
 	docker-php-ext-enable igbinary redis; \
-	rm -rf /tmp/pear
+	rm -rf /tmp/pear; \
+	sed -i 's/session.save_handler = files/session.save_handler = redis/g' /usr/local/etc/php/php.ini; \
+	sed -i 's/\;session.save_path = "\/tmp"/session.save_path = "tcp:\/\/127.0.0.1:6379"/g' /usr/local/etc/php/php.ini
+
 
 # 安装 imap bz2
 RUN apt-get update; \
