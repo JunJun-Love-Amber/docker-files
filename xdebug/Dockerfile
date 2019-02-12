@@ -31,7 +31,16 @@ RUN pecl install xdebug; \
 		echo '; Effective only in the Linux Environment and docker run option --net=host'; \
 		echo '; xdebug.remote_connect_back=1'; \
 	} | tee -a /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-
+# 启用 opcache
+RUN docker-php-ext-enable opcache; \
+	{ \
+		echo 'opcache.revalidate_freq=0'; \
+		echo 'opcache.validate_timestamps=10'; \
+		echo 'opcache.max_accelerated_files=7963'; \
+		echo 'opcache.memory_consumption=192'; \
+		echo 'opcache.interned_strings_buffer=16'; \
+		echo 'opcache.fast_shutdown=1'; \
+	} | tee -a /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
 
 # 安装依赖与扩展
 RUN	requirements="libmcrypt-dev libcurl4-gnutls-dev libpng-dev zlib1g-dev"; \ 	
@@ -78,6 +87,8 @@ RUN cd /usr/local/src; \
 	make; \ 
 	make install; \
 	docker-php-ext-enable tideways_xhprof
+
+
 
 # 安装 mongodb
 RUN pecl install mongodb; docker-php-ext-enable mongodb; rm -rf /tmp/pear
