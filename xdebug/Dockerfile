@@ -65,6 +65,10 @@ RUN echo 'deb http://s3-eu-west-1.amazonaws.com/tideways/packages debian main' >
 	apt-get update; \
 	apt-get install tideways-php; \
 	docker-php-ext-enable tideways
+	
+# 安装 xlswriter（一个超级强的 EXCEL 导出库）
+RUN pecl install xlswriter; \
+	docker-php-ext-enable xlswriter
 
 # 安装 mongodb
 RUN pecl install mongodb; docker-php-ext-enable mongodb; rm -rf /tmp/pear
