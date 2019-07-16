@@ -88,7 +88,9 @@ RUN cd /usr/local/src; \
 	make install; \
 	docker-php-ext-enable tideways_xhprof
 
-
+# 安装 xlswriter
+RUN pecl install xlswriter; \
+	docker-php-ext-enable xlswriter
 
 # 安装 mongodb
 RUN pecl install mongodb; docker-php-ext-enable mongodb; rm -rf /tmp/pear
