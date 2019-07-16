@@ -88,7 +88,7 @@ RUN cd /usr/local/src; \
 	make install; \
 	docker-php-ext-enable tideways_xhprof
 
-# 安装 xlswriter
+# 安装 xlswriter（一个超级强的 EXCEL 导出库）
 RUN pecl install xlswriter; \
 	docker-php-ext-enable xlswriter
 
@@ -105,6 +105,8 @@ RUN apt update; apt install -y openssh-server; rm -rf /var/lib/apt/lists/*; \
 	sed -i 's/\#PermitRootLogin/PermitRootLogin/' /etc/ssh/sshd_config;\
 	sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 
+
+	
 # SSH login fix. Otherwise user is kicked off after login
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 
