@@ -19,7 +19,7 @@ RUN sed -i 's/\;pid = run\/php-fpm.pid/  pid = run\/php-fpm.pid/g' /usr/local/et
 RUN cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
 
 # 安装 xdebug
-RUN pecl install xdebug; \
+RUN http://pecl.php.net/get/xdebug-2.7.2.tgz; \
 	docker-php-ext-enable xdebug; \
 	rm -rf /tmp/pear;\
 	{ \
