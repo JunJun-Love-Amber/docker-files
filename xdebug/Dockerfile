@@ -2,7 +2,7 @@ FROM php:7.0-fpm
 
 # 安装常用工具
 RUN apt update; \
-	apt install vim net-tools iputils-ping htop iotop curl git zip procps wget sudo lsof telnet -y; \
+	apt install vim net-tools iputils-ping htop iotop curl git zip procps wget sudo lsof telnet lrzsz -y; \
 	rm -rf /var/lib/apt/lists/*
 # 启用 ll 
 RUN php -r '$bashrc="/root/.bashrc";file_put_contents($bashrc,str_replace("# alias ll","  alias ll",file_get_contents($bashrc)));'
