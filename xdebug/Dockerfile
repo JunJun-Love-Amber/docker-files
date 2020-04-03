@@ -6,7 +6,8 @@ RUN apt update; \
 	rm -rf /var/lib/apt/lists/*
 # 启用 ll 
 RUN php -r '$bashrc="/root/.bashrc";file_put_contents($bashrc,str_replace("# alias ll","  alias ll",file_get_contents($bashrc)));'
-
+# 调整时区
+RUN  ln -sf /usr/share/zoneinfo/PRC /etc/localtime; echo "Asia/Shanghai" > /etc/timezone;
 # 修改 php-fpm 配置
 RUN sed -i 's/\;pid = run\/php-fpm.pid/  pid = run\/php-fpm.pid/g' /usr/local/etc/php-fpm.conf; \
 	sed -i 's/\;error_log = log\/php-fpm.log/  error_log = log\/php-fpm.log/g' /usr/local/etc/php-fpm.conf; \
