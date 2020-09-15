@@ -24,8 +24,8 @@ RUN pecl install http://pecl.php.net/get/xdebug-2.7.2.tgz; \
 	docker-php-ext-enable xdebug; \
 	rm -rf /tmp/pear;\
 	{ \
-		echo 'xdebug.overload_var_dump=0'; \
 		echo 'xdebug.remote_enable=1'; \
+		echo 'xdebug.overload_var_dump=0'; \
 		echo 'xdebug.remote_autostart=1'; \
 		echo 'xdebug.remote_port=9001'; \
 		echo 'xdebug.remote_host=127.0.0.1'; \
@@ -35,12 +35,14 @@ RUN pecl install http://pecl.php.net/get/xdebug-2.7.2.tgz; \
 # 启用 opcache
 RUN docker-php-ext-enable opcache; \
 	{ \
-		echo 'opcache.revalidate_freq=0'; \
-		echo 'opcache.validate_timestamps=10'; \
-		echo 'opcache.max_accelerated_files=7963'; \
-		echo 'opcache.memory_consumption=192'; \
-		echo 'opcache.interned_strings_buffer=16'; \
+		echo 'opcache.enable=1'; \
+		echo 'opcache.revalidate_freq=5'; \
+		echo 'opcache.validate_timestamps=1'; \
+		echo 'opcache.max_accelerated_files=65407'; \
+		echo 'opcache.memory_consumption=512'; \
 		echo 'opcache.fast_shutdown=1'; \
+		echo 'opcache.enable_file_override=1'; \
+		echo 'opcache.force_restart_timeout=30'; \
 	} | tee -a /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
 
 # 安装依赖与扩展
